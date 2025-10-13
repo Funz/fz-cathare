@@ -48,30 +48,40 @@ def main():
             return
         
         print(f"Successfully parsed CATHARE output!")
-        print(f"\nFound {len(results.columns)} output variables:")
         
-        # Display available variables
-        for col in sorted(results.columns):
-            if col != 'path':
-                value = results[col].iloc[0] if len(results) > 0 else None
-                if isinstance(value, list):
-                    print(f"  - {col}: {len(value)} data points")
-                else:
-                    print(f"  - {col}: {value}")
-        
-        # Show some sample data
-        print("\n" + "=" * 60)
-        print("Sample Data")
-        print("=" * 60)
-        
-        # Try to show TIME_ML and ML as an example
-        for var in ['TIME_ML', 'ML']:
-            if var in results.columns:
-                data = results[var].iloc[0] if len(results) > 0 else None
-                if isinstance(data, list) and len(data) > 0:
-                    print(f"\n{var} (first 5 values):")
-                    for i, val in enumerate(data[:5]):
-                        print(f"  [{i}] {val}")
+        # The Cathare model returns all outputs in a dictionary under the '*' column
+        # This is because CATHARE output variables are dynamic (not known in advance)
+        if '*' in results.columns and len(results) > 0:
+            output_dict = results['*'].iloc[0]
+            
+            if isinstance(output_dict, dict):
+                print(f"\nFound {len(output_dict)} output variables:")
+                
+                # Display available variables
+                for var_name in sorted(output_dict.keys()):
+                    value = output_dict[var_name]
+                    if isinstance(value, list):
+                        print(f"  - {var_name}: {len(value)} data points")
+                    else:
+                        print(f"  - {var_name}: {value}")
+                
+                # Show some sample data
+                print("\n" + "=" * 60)
+                print("Sample Data")
+                print("=" * 60)
+                
+                # Try to show TIME_ML and ML as an example
+                for var in ['TIME_ML', 'ML', 'TIME_MV', 'MV']:
+                    if var in output_dict:
+                        data = output_dict[var]
+                        if isinstance(data, list) and len(data) > 0:
+                            print(f"\n{var} (first 5 values):")
+                            for i, val in enumerate(data[:5]):
+                                print(f"  [{i}] {val:.6f}")
+            else:
+                print(f"\nUnexpected output format: {type(output_dict)}")
+        else:
+            print("\nNo output data found in '*' column")
         
         print("\n" + "=" * 60)
         print("Example complete!")

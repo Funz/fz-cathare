@@ -1,0 +1,17 @@
+* Example CATHARE input file with parameters
+* This demonstrates how to use variables in a CATHARE input file
+*
+* Temperature parameter
+TEMP = $temperature
+*
+* Pressure parameter  
+PRESS = $pressure
+*
+* Calculated parameter using formula
+DENSITY = @($pressure / (287.0 * $temperature))
+*
+* Another example with formula
+VELOCITY = @($flow_rate / $area)
+*
+* Static value (no variable)
+GRAVITY = 9.81

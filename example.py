@@ -18,27 +18,27 @@ except ImportError:
 def main():
     """Parse sample CATHARE output and display results."""
     
-    # Path to test output directory
-    test_output_dir = os.path.join(
+    # Path to example output directory
+    example_output_dir = os.path.join(
         os.path.dirname(__file__),
-        "tests",
+        "examples",
         "CNV22",
         "output"
     )
     
-    if not os.path.exists(test_output_dir):
-        print(f"Error: Test directory not found at {test_output_dir}")
+    if not os.path.exists(example_output_dir):
+        print(f"Error: Example directory not found at {example_output_dir}")
         sys.exit(1)
     
     print("=" * 60)
     print("CATHARE Output Parsing Example")
     print("=" * 60)
-    print(f"\nParsing output from: {test_output_dir}")
+    print(f"\nParsing output from: {example_output_dir}")
     print()
     
     # Parse the output using the Cathare model
     try:
-        results = fz.fzo(test_output_dir, model="Cathare")
+        results = fz.fzo(example_output_dir, model="Cathare")
         
         if results is None or (hasattr(results, 'empty') and results.empty):
             print("No results parsed from output files.")

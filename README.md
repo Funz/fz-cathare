@@ -13,7 +13,10 @@ The plugin follows the standard fz plugin structure:
 ```
 fz-cathare/
 ├── examples/
-│   └── input.txt               # Example input file
+│   ├── input.txt               # Simple parametric input example
+│   └── CNV22/                  # Complete CATHARE test case
+│       ├── input/              # Input files (CNV22, CNV22g)
+│       └── output/             # Expected output files (FORT07, listing, etc.)
 ├── .fz/
 │   ├── models/
 │   │   └── Cathare.json        # Model configuration
@@ -171,6 +174,32 @@ PRESS = $pressure
 
 * Calculated parameter using formula
 DENSITY = @($pressure / (287.0 * $temperature))
+```
+
+### Complete CATHARE Example (CNV22)
+
+The `examples/CNV22/` directory contains a complete CATHARE test case:
+
+- **input/CNV22**: Main CATHARE input file
+- **input/CNV22g**: Graphical output specification
+- **output/**: Reference output files including FORT07 with evolution data
+
+You can use this example to test the plugin:
+
+```python
+import fz
+
+# Parse the CNV22 output
+results = fz.fzo("examples/CNV22/output", model="Cathare")
+
+# Access parsed EVOLUTION data
+output_vars = results['*'].iloc[0]
+print(f"Found {len(output_vars)} variables")
+
+# Example: liquid mass evolution
+time_ml = output_vars['TIME_ML']
+ml = output_vars['ML']
+print(f"Liquid mass at t=0: {ml[0]:.2f} kg")
 ```
 
 ### Python Examples

@@ -87,8 +87,8 @@ def demo_output_parsing():
     print("STEP 3: Output Parsing (fzo)")
     print("=" * 70)
     
-    # Use the existing test output
-    output_dir = "tests/CNV22/output"
+    # Use the CNV22 example output
+    output_dir = "examples/CNV22/output"
     
     print(f"\nParsing CATHARE output from: {output_dir}")
     

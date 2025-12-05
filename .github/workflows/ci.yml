@@ -124,4 +124,8 @@ jobs:
           echo "Error: Missing example input file"
           exit 1
         fi
+        if [ ! -d "examples/CNV22" ]; then
+          echo "Error: Missing CNV22 example directory"
+          exit 1
+        fi
         echo "✓ Example files present"

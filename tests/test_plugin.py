@@ -102,7 +102,7 @@ def test_example_files():
     print("Testing example files...")
     
     examples = [
-        "examples/Cathare/input.txt"
+        "examples/input.txt"
     ]
     
     for example_file in examples:
@@ -123,7 +123,7 @@ def test_with_fz():
         
         # Test parsing input file
         print("  Testing fz.fzi() on input.txt...", end=" ")
-        variables = fz.fzi("examples/Cathare/input.txt", "Cathare")
+        variables = fz.fzi("examples/input.txt", "Cathare")
         assert "temperature" in variables, "Variable 'temperature' not found in parsed input"
         assert "pressure" in variables, "Variable 'pressure' not found in parsed input"
         print("✓")
@@ -132,7 +132,7 @@ def test_with_fz():
         print("  Testing fz.fzc() compilation...", end=" ")
         with tempfile.TemporaryDirectory() as tmpdir:
             fz.fzc(
-                "examples/Cathare/input.txt",
+                "examples/input.txt",
                 {"temperature": 350, "pressure": 101325, "flow_rate": 1.5, "area": 0.01},
                 "Cathare",
                 output_dir=tmpdir

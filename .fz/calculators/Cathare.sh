@@ -4,7 +4,6 @@
 # Compatible with fz framework
 #
 # This script launches CATHARE calculations.
-# Replace the mock implementation with actual CATHARE calls.
 
 # if directory as input, cd into it
 if [ -d "$1" ]; then
@@ -29,28 +28,14 @@ PID_FILE=$PWD/PID
 echo $$ >> $PID_FILE
 
 # CATHARE execution
-# Replace this section with actual CATHARE command
-# For example:
-#   cathare < "$input" > output.txt 2>&1
-#
-# The CATHARE code typically produces a FORT07 file with results
+# The CATHARE code produces a FORT07 file with results
 # which will be automatically parsed by the Cathare.json output configuration
 
 echo "Running CATHARE on $input..."
 
-# Mock implementation - replace with actual CATHARE execution
-# In a real scenario, you would call the CATHARE executable here
-# cathare < "$input" > listing 2> err.txt
-
-# For testing purposes, create a minimal FORT07 file
-cat > FORT07 << 'EOF'
-EVOLUTION ML
-TIME            SECONDS    
- 0.00000000E+000 0.81098631E+000 0.13109863E+001 0.18109863E+001 0.23109863E+001
-           5
-LIQMASS         KG        CANAL:001
- 0.29076885E+002 0.28502382E+002 0.28231470E+002 0.27992447E+002 0.27772408E+002
-EOF
+# Execute CATHARE with the input file
+# Adjust the command based on your CATHARE installation
+cathare < "$input" > listing 2> err.txt
 
 echo "CATHARE calculation completed."
 

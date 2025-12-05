@@ -13,8 +13,7 @@ The plugin follows the standard fz plugin structure:
 ```
 fz-cathare/
 ├── examples/
-│   └── Cathare/
-│       └── input.txt           # Example input file
+│   └── input.txt               # Example input file
 ├── .fz/
 │   ├── models/
 │   │   └── Cathare.json        # Model configuration
@@ -160,7 +159,7 @@ The plugin includes several example files and scripts:
 
 ### Example Input File
 
-The `examples/Cathare/input.txt` file demonstrates how to use variables in a CATHARE input:
+The `examples/input.txt` file demonstrates how to use variables in a CATHARE input:
 
 ```
 * Example CATHARE input file with parameters

@@ -24,7 +24,7 @@ def demo_variable_detection():
     print("STEP 1: Variable Detection (fzi)")
     print("=" * 70)
     
-    input_file = "examples/Cathare/input.txt"
+    input_file = "examples/input.txt"
     
     if not os.path.exists(input_file):
         print(f"Error: Example file not found: {input_file}")
@@ -47,7 +47,7 @@ def demo_input_compilation():
     print("STEP 2: Input Compilation (fzc)")
     print("=" * 70)
     
-    input_file = "examples/Cathare/input.txt"
+    input_file = "examples/input.txt"
     
     # Define parameter values for a parametric study
     # We'll create a grid of 2x2 = 4 cases

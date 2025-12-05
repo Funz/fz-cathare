@@ -8,9 +8,6 @@ This script shows how to parse CATHARE output files using the fz framework.
 import sys
 import os
 
-# Add parent directory to path if running from repo
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 try:
     import fz
 except ImportError:

@@ -11,9 +11,6 @@ This script shows how to:
 import sys
 import os
 
-# Add parent directory to path if running from repo
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 try:
     import fz
 except ImportError:
@@ -27,7 +24,7 @@ def demo_variable_detection():
     print("STEP 1: Variable Detection (fzi)")
     print("=" * 70)
     
-    input_file = "tests/example_parametric.txt"
+    input_file = "examples/Cathare/input.txt"
     
     if not os.path.exists(input_file):
         print(f"Error: Example file not found: {input_file}")
@@ -50,7 +47,7 @@ def demo_input_compilation():
     print("STEP 2: Input Compilation (fzc)")
     print("=" * 70)
     
-    input_file = "tests/example_parametric.txt"
+    input_file = "examples/Cathare/input.txt"
     
     # Define parameter values for a parametric study
     # We'll create a grid of 2x2 = 4 cases
@@ -167,7 +164,7 @@ Example code:
             "pressure": [1e5, 2e5, 3e5]
         },
         model="Cathare",
-        calculators="sh://cathare",
+        calculators="localhost_Cathare",
         results_dir="results"
     )
     

@@ -9,9 +9,6 @@ FORT07 file format.
 import sys
 import os
 
-# Add parent directory to path
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 try:
     import fz
 except ImportError:

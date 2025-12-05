@@ -1,0 +1,6 @@
+{
+    "uri": "sh://",
+    "models": {
+        "Cathare": "bash .fz/calculators/Cathare.sh"
+    }
+}

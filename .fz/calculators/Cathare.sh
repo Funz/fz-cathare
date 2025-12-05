@@ -12,8 +12,6 @@ export v25_1=$VERS
 export v25_2=$VERS
 export v25_3=$VERS
 
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$VERS/$lib
-
 # if directory as input, cd into it
 if [ -d "$1" ]; then
   cd "$1"
@@ -106,7 +104,7 @@ fi
 if [ `grep ERROR reader.listing 2>/dev/null | wc -w` != 0 ] ; then
   echo "Reader error!"
   cd $cwd
-  exit -1
+  exit 1
 else
   echo "  No reader error"
 fi
@@ -164,7 +162,7 @@ rm -f *.SUIVI
 
 # Suppress "PID" file
 if [ -f $pid ]; then
-	rm -f $pid
+  rm -f $pid
 fi
 
 echo "CATHARE calculation completed successfully."

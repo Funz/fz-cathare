@@ -1,3 +1,10 @@
+# Results and temporary files
+results/
+*.out
+*.msg
+*.html
+PID
+
 # Python
 __pycache__/
 *.py[cod]
@@ -29,6 +36,9 @@ ENV/
 env/
 .venv
 
+# fz temporary files
+.fz/tmp/
+
 # IDE
 .vscode/
 .idea/
@@ -41,7 +51,6 @@ env/
 Thumbs.db
 
 # Test outputs
-results/
 *.log
 
 # Temporary files

@@ -6,13 +6,31 @@ Cathare plugin for the [Funz](https://github.com/Funz/fz) framework - enabling p
 
 This plugin provides integration between the Funz parametric computing framework and CATHARE (Code for Analysis of THermalhydraulics during an Accident of Reactor and safety Evaluation), a thermal-hydraulics simulation code.
 
-## Structure
+## Directory Structure
 
-The plugin follows the new fz plugin structure:
+The plugin follows the standard fz plugin structure:
 
-- `.fz/models/Cathare.json` - Model definition with output parsing configuration
-- `.fz/calculators/Localhost_Cathare.json` - Calculator configuration for local execution
-- `tests/CNV22/` - Test case with sample input and output files
+```
+fz-cathare/
+├── examples/
+│   ├── input.txt               # Simple parametric input example
+│   └── CNV22/                  # Complete CATHARE test case
+│       ├── input/              # Input files (CNV22, CNV22g)
+│       └── output/             # Expected output files (FORT07, listing, etc.)
+├── .fz/
+│   ├── models/
+│   │   └── Cathare.json        # Model configuration
+│   └── calculators/
+│       ├── Cathare.sh          # Calculator script
+│       └── localhost_Cathare.json
+├── tests/
+│   ├── test_plugin.py          # Plugin structure tests
+│   ├── test_output_parsing.py  # Output parsing validation
+│   └── CNV22/                  # Test case with sample data
+├── example.py                  # Basic usage example
+├── example_parametric_study.py # Parametric study example
+└── example_usage.ipynb         # Jupyter notebook examples
+```
 
 ## Model Definition
 
@@ -79,7 +97,7 @@ results = fz.fzr(
     "cathare_input.dat",
     input_variables,
     model="Cathare",
-    calculators="sh://cathare",
+    calculators="localhost_Cathare",
     results_dir="results"
 )
 
@@ -140,6 +158,52 @@ cd fz-cathare
 
 ## Examples
 
+The plugin includes several example files and scripts:
+
+### Example Input File
+
+The `examples/input.txt` file demonstrates how to use variables in a CATHARE input:
+
+```
+* Example CATHARE input file with parameters
+* Temperature parameter
+TEMP = $temperature
+
+* Pressure parameter  
+PRESS = $pressure
+
+* Calculated parameter using formula
+DENSITY = @($pressure / (287.0 * $temperature))
+```
+
+### Complete CATHARE Example (CNV22)
+
+The `examples/CNV22/` directory contains a complete CATHARE test case:
+
+- **input/CNV22**: Main CATHARE input file
+- **input/CNV22g**: Graphical output specification
+- **output/**: Reference output files including FORT07 with evolution data
+
+You can use this example to test the plugin:
+
+```python
+import fz
+
+# Parse the CNV22 output
+results = fz.fzo("examples/CNV22/output", model="Cathare")
+
+# Access parsed EVOLUTION data
+output_vars = results['*'].iloc[0]
+print(f"Found {len(output_vars)} variables")
+
+# Example: liquid mass evolution
+time_ml = output_vars['TIME_ML']
+ml = output_vars['ML']
+print(f"Liquid mass at t=0: {ml[0]:.2f} kg")
+```
+
+### Python Examples
+
 Several example scripts are provided to demonstrate the plugin:
 
 ### 1. Basic Output Parsing (`example.py`)
@@ -161,35 +225,48 @@ This example shows:
 - Input compilation with parameter grids
 - Output parsing and data extraction
 
-### 3. Example Input Template (`tests/example_parametric.txt`)
+### 3. Jupyter Notebook (`example_usage.ipynb`)
 
-A sample CATHARE input file showing how to use variables:
+An interactive notebook with step-by-step examples:
+```bash
+jupyter notebook example_usage.ipynb
 ```
-* Temperature parameter
-TEMP = $temperature
 
-* Pressure parameter  
-PRESS = $pressure
-
-* Calculated parameter using formula
-DENSITY = @($pressure / (287.0 * $temperature))
-```
+This notebook includes:
+- Installation instructions
+- Variable parsing examples
+- Input compilation demonstrations
+- Output parsing examples
+- Visualization of results
 
 ## Testing
+
+The plugin includes test scripts to validate functionality:
+
+### Plugin Structure Tests
+
+Test that all required files are present and valid:
+```bash
+python3 tests/test_plugin.py
+```
+
+This validates:
+- Model JSON files
+- Calculator configurations
+- Calculator shell scripts
+- Example files
+- Integration with fz framework (if installed)
+
+### Output Parsing Tests
+
+Test CATHARE FORT07 output parsing:
+```bash
+python3 tests/test_output_parsing.py
+```
 
 Test files are provided in `tests/CNV22/`:
 - `input/` - Sample CATHARE input files
 - `output/` - Sample CATHARE output files including FORT07
-
-### Run Tests
-
-```bash
-# Test output parsing accuracy
-python3 tests/test_output_parsing.py
-
-# Parse existing output directory
-python3 -c "import fz; print(fz.fzo('tests/CNV22/output', model='Cathare'))"
-```
 
 ## Background
 
